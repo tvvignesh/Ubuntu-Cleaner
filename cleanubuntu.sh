@@ -22,3 +22,6 @@ echo "Removing temporary files";
 apt-get autoclean
 apt-get clean
 sudo rm -rf /tmp/*
+echo "Removing Old Kernels";
+sudo dpkg --configure -a;
+sudo dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge;
